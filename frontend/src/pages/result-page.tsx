@@ -63,6 +63,15 @@ export function ResultPage() {
             Export PDF
           </Button>
         </div>
+        {(analysis.error_message || (analysis.http_status ?? 0) >= 400) && (
+          <Alert className="mb-6 border-amber-200 bg-amber-50">
+            <AlertTitle>Analyse partielle</AlertTitle>
+            <AlertDescription>
+              {analysis.error_message ??
+                `La ressource a répondu HTTP ${analysis.http_status}. Le moteur a limité l'analyse du contenu et le verdict doit être interprété avec prudence.`}
+            </AlertDescription>
+          </Alert>
+        )}
         <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
           <Card>
             <CardHeader>

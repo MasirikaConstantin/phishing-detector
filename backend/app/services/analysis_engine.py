@@ -143,7 +143,9 @@ def evaluate_indicators(
 ) -> list[IndicatorEvaluation]:
     path_and_query = target.normalized_url.lower()
     subdomain_count = count_subdomains(domain_info.subdomain.split(".")) if domain_info.subdomain else 0
-    soup = parse_html(html)
+    status_code = fetch_result.status_code if fetch_result else None
+    content_analysis_allowed = bool(html and status_code is not None and status_code < 400)
+    soup = parse_html(html) if content_analysis_allowed else parse_html("")
     sensitive_form, external_action, sensitive_details, external_details = inspect_forms(soup, domain_info)
     hidden_elements = count_hidden_elements(soup)
     external_assets, external_assets_details = has_external_assets(soup, domain_info)
@@ -151,6 +153,14 @@ def evaluate_indicators(
     redirected_host = urlparse(fetch_result.final_url).hostname if fetch_result else None
 
     indicators = [
+        IndicatorEvaluation(
+            code="http_error_status",
+            label="Statut HTTP non valide",
+            category="network",
+            weight=0,
+            detected=bool(status_code is not None and status_code >= 400),
+            details=f"La ressource a répondu HTTP {status_code}. Le contenu a été analysé de manière limitée." if status_code is not None and status_code >= 400 else f"Statut HTTP observé : {status_code or 'indisponible'}.",
+        ),
         IndicatorEvaluation(
             code="ip_in_url",
             label="Adresse IP utilisée dans l'URL",
@@ -276,6 +286,11 @@ async def compute_analysis(target_url: str) -> AnalysisComputation:
     try:
         fetch_result = await fetch_html(target.normalized_url)
         html = fetch_result.html
+        if fetch_result.status_code is not None and fetch_result.status_code >= 400:
+            error_message = (
+                f"La ressource a répondu HTTP {fetch_result.status_code}. "
+                "Le verdict est fourni avec une analyse de contenu limitée."
+            )
     except SecurityError:
         raise
     except Exception as exc:
@@ -295,6 +310,7 @@ async def compute_analysis(target_url: str) -> AnalysisComputation:
             "final_url": fetch_result.final_url if fetch_result else target.normalized_url,
             "status_code": fetch_result.status_code if fetch_result else None,
             "used_browser_fallback": fetch_result.used_browser_fallback if fetch_result else False,
+            "content_analysis_limited": bool(fetch_result and fetch_result.status_code is not None and fetch_result.status_code >= 400),
         },
         "scoring_version": "1.0.0",
     }
