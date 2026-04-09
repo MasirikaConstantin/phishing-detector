@@ -190,7 +190,7 @@ def login(request: HttpRequest, payload: LoginInput):
 
 
 @router.get("/v1/health")
-def health(_: HttpRequest):
+def health(request: HttpRequest):
     engine = get_engine()
     with engine.connect() as connection:
         connection.execute(text("SELECT 1"))
