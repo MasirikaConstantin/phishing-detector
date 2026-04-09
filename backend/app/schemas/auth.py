@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, Field
 
 
 class LoginInput(BaseModel):
@@ -11,7 +11,7 @@ class LoginInput(BaseModel):
 class UserOut(BaseModel):
     id: int
     username: str
-    email: EmailStr
+    email: str
     role: str
     last_login_at: datetime | None = None
 

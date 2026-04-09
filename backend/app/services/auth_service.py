@@ -65,11 +65,13 @@ def authenticate(session: Session, username: str, password: str, ip_address: str
 
 def ensure_default_users(session: Session) -> None:
     for username, email, role in [
-        ("admin", "admin@phishing-detector.local", UserRole.ADMIN),
-        ("analyst", "analyst@phishing-detector.local", UserRole.USER),
+        ("admin", "admin@phishing-detector.app", UserRole.ADMIN),
+        ("analyst", "analyst@phishing-detector.app", UserRole.USER),
     ]:
         existing = session.scalar(select(User).where(User.username == username))
         if existing:
+            if existing.email.endswith(".local"):
+                existing.email = email
             continue
         session.add(
             User(
