@@ -9,7 +9,11 @@ API Django pour la plateforme de détection de phishing.
 3. Copier `.env.example` vers `.env`.
 4. Démarrer MySQL.
 5. Exécuter `python -m scripts.bootstrap`.
-6. Lancer `python manage.py runserver 0.0.0.0:8000`.
+6. En local, lancer `python manage.py runserver 0.0.0.0:8000`.
+
+## Production Docker
+
+Le conteneur Docker backend n'utilise pas `runserver`. Il démarre avec Gunicorn et un worker Uvicorn.
 
 ## API
 
