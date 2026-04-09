@@ -52,13 +52,13 @@ export function ResultPage() {
 
   return (
     <AppShell>
-      <section className="container py-16">
+      <section className="container py-10 sm:py-16">
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-4xl">Résultat d'analyse</h1>
             <p className="mt-2 text-muted-foreground">{analysis.normalized_url}</p>
           </div>
-          <Button variant="outline" onClick={exportPdf}>
+          <Button variant="outline" onClick={exportPdf} className="w-full md:w-auto">
             <FileDown className="mr-2 h-4 w-4" />
             Export PDF
           </Button>

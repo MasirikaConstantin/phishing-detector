@@ -37,7 +37,7 @@ export function LoginPage() {
 
   return (
     <AppShell>
-      <section className="container py-16">
+      <section className="container py-10 sm:py-16">
         <Card className="mx-auto max-w-lg">
           <CardHeader>
             <CardTitle>Connexion administrateur</CardTitle>

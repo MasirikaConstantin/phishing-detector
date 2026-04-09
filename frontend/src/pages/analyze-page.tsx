@@ -27,7 +27,7 @@ export function AnalyzePage() {
 
   return (
     <AppShell>
-      <section className="container py-16">
+      <section className="container py-10 sm:py-16">
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <Card>
             <CardHeader>

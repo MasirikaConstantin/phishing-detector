@@ -27,7 +27,7 @@ export function AdminDashboardPage() {
 
   return (
     <AppShell>
-      <section className="container py-16">
+      <section className="container py-10 sm:py-16">
         <div className="mb-8 flex items-center gap-4">
           <div className="grid h-14 w-14 place-items-center rounded-3xl bg-primary/10 text-primary">
             <ShieldEllipsis className="h-7 w-7" />

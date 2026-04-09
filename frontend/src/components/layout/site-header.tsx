@@ -20,8 +20,8 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur-lg">
-      <div className="container flex h-20 items-center justify-between gap-4">
-        <Link to="/">
+      <div className="container flex min-h-20 items-center justify-between gap-3 py-4">
+        <Link to="/" className="min-w-0">
           <Logo />
         </Link>
         <nav className="hidden items-center gap-6 lg:flex">

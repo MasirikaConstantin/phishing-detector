@@ -47,12 +47,12 @@ export function UrlAnalyzerForm({
             </FormItem>
           )}
         />
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <Button type="submit" size="lg" disabled={isPending}>
-            {isPending ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <ShieldAlert className="mr-2 h-4 w-4" />}
+        <div className="flex flex-col gap-3 md:flex-row md:items-start">
+          <Button type="submit" size="lg" disabled={isPending} className="w-full md:w-auto">
+            {isPending ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <ShieldAlert className="h-4 w-4" />}
             Lancer l'analyse
           </Button>
-          <p className="text-sm text-muted-foreground">
+          <p className="max-w-xl text-sm leading-6 text-muted-foreground">
             La plateforme bloque les cibles locales et les réseaux privés avant toute requête.
           </p>
         </div>
