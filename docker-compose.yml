@@ -8,8 +8,6 @@ services:
       MYSQL_USER: phishing_user
       MYSQL_PASSWORD: phishing_pass
       MYSQL_ROOT_PASSWORD: rootpassword
-    ports:
-      - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
