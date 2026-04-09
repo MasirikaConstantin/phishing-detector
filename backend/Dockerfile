@@ -16,4 +16,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "alembic upgrade head && python -m scripts.bootstrap && python -m scripts.seed_demo_data && python manage.py runserver 0.0.0.0:8000"]
+CMD ["sh", "-c", "alembic upgrade head && python manage.py migrate && python -m scripts.bootstrap && python -m scripts.seed_demo_data && python manage.py runserver 0.0.0.0:8000"]
