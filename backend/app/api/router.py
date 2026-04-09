@@ -139,6 +139,7 @@ def analyses(request: HttpRequest, filters: AnalysisFilterIn):
             max_score=filters.max_score,
             from_date=filters.from_date,
             to_date=filters.to_date,
+            limit=filters.limit,
         )
     return {
         "items": [serialize_analysis_summary(item) for item in items],

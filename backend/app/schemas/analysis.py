@@ -52,4 +52,4 @@ class AnalysisFilterIn(BaseModel):
     max_score: int | None = Field(default=None, ge=0, le=100)
     from_date: datetime | None = None
     to_date: datetime | None = None
-
+    limit: int = Field(default=100, ge=1, le=500)
