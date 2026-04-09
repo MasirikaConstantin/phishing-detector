@@ -12,7 +12,7 @@ from app.core.throttling import check_rate_limit
 from app.db.session import get_engine, session_scope
 from app.repositories.analysis_repository import get_analysis, list_analyses
 from app.repositories.stats_repository import fetch_stats
-from app.schemas.analysis import AnalysisFilterIn, AnalysisListOut, AnalysisOut, AnalyzeInput
+from app.schemas.analysis import AnalysisListOut, AnalysisOut, AnalyzeInput
 from app.schemas.auth import LoginInput, TokenOut, UserOut
 from app.schemas.stats import StatsOut
 from app.services.analysis_engine import analyze_and_persist
@@ -128,18 +128,29 @@ async def analyze_url(request: HttpRequest, payload: AnalyzeInput):
 
 
 @router.get("/v1/analyses", auth=auth, response=AnalysisListOut)
-def analyses(request: HttpRequest, filters: AnalysisFilterIn):
+def analyses(
+    request: HttpRequest,
+    verdict: str | None = None,
+    risk_level: str | None = None,
+    min_score: int | None = None,
+    max_score: int | None = None,
+    from_date: str | None = None,
+    to_date: str | None = None,
+    limit: int = 100,
+):
     require_admin(request)
+    parsed_from_date = datetime.fromisoformat(from_date) if from_date else None
+    parsed_to_date = datetime.fromisoformat(to_date) if to_date else None
     with session_scope() as session:
         items, total = list_analyses(
             session,
-            verdict=filters.verdict,
-            risk_level=filters.risk_level,
-            min_score=filters.min_score,
-            max_score=filters.max_score,
-            from_date=filters.from_date,
-            to_date=filters.to_date,
-            limit=filters.limit,
+            verdict=verdict,
+            risk_level=risk_level,
+            min_score=min_score,
+            max_score=max_score,
+            from_date=parsed_from_date,
+            to_date=parsed_to_date,
+            limit=max(min(limit, 500), 1),
         )
     return {
         "items": [serialize_analysis_summary(item) for item in items],
