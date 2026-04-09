@@ -15,8 +15,8 @@ source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
 alembic upgrade head
-python scripts/bootstrap.py
-python scripts/seed_demo_data.py
+python -m scripts.bootstrap
+python -m scripts.seed_demo_data
 python manage.py runserver 0.0.0.0:8000
 ```
 

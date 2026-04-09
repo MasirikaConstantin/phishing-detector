@@ -8,7 +8,7 @@ API Django pour la plateforme de détection de phishing.
 2. Installer les dépendances avec `pip install -r requirements.txt`.
 3. Copier `.env.example` vers `.env`.
 4. Démarrer MySQL.
-5. Exécuter `python scripts/bootstrap.py`.
+5. Exécuter `python -m scripts.bootstrap`.
 6. Lancer `python manage.py runserver 0.0.0.0:8000`.
 
 ## API
